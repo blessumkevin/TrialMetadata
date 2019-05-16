@@ -1,8 +1,10 @@
 public class AccountOperations {
 Public static Account setDefaultDescription(Account a){
-If (a.Description != null)return a; Else {
-                a.Description = 'Default description';
-return a; }
+If (a.Description != null)return a;
+Else {
+a.Description = 'Default description';
+return a;
+}
 }
    //New methods introduced by Developer 1 working on the US-003
 public static Account setDefaultBillingAddress(Account a){
