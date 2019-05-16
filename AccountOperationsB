@@ -4,7 +4,8 @@ If (a.Description != null) return a; Else {
                 a.Description = 'Default description';
 return a; }
 }
-//New methods introduced by Developer 1 working on the US-001 public static Account setDefaultBillingAddress(Account a){//DEV 1
+//New methods introduced by Developer 1 working on the US-001 
+public static Account setDefaultBillingAddress(Account a){//DEV 1
 a.billingstreet = 'Po Castellana, 77'; // DEV 2 updates 
 a.billingstate = 'Madrid';
 a.billingpostalcode ='28046'; // DEV 2 updates
