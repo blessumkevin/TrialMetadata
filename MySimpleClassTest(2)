@@ -1,0 +1,30 @@
+@isTest
+private class MySimpleClassTest {
+    @isTest static void testGreetingMorningAndEvening() {
+        String morningGreeting = MySimpleClass.getGreeting(true);
+        System.assertEquals('Good morning', morningGreeting);
+
+        String eveningGreeting = MySimpleClass.getGreeting(false);
+        System.assertEquals('Good evening', eveningGreeting);
+    }
+
+    @isTest static void testFindUsersByUsername() {
+        User u = new User(
+            FirstName = 'Test',
+            LastName = 'User',
+            Email = 'testuser@example.com',
+            Username = 'testuser@example.com.test',
+            Alias = 'tuser',
+            TimeZoneSidKey = 'America/Los_Angeles',
+            LocaleSidKey = 'en_US',
+            EmailEncodingKey = 'UTF-8',
+            ProfileId = UserInfo.getProfileId(),
+            LanguageLocaleKey = 'en_US'
+        );
+        insert u;
+
+        List<User> foundUsers = MySimpleClass.findUsersByUsername(u.Username);
+        System.assertEquals(1, foundUsers.size());
+        System.assertEquals(u.Id, foundUsers[0].Id);
+    }
+}
