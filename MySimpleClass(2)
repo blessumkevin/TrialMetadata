@@ -1,0 +1,14 @@
+public class MySimpleClass {
+    public static String getGreeting(Boolean isMorning) {
+        if (isMorning) {
+            return 'Good morning';
+        } else {
+            return 'Good evening';
+        }
+    }
+
+    public static List<User> findUsersByUsername(String username) {
+        // Use parameterized SOQL to prevent injection
+        return [SELECT Id FROM User WHERE Username = :username];
+    }
+}
