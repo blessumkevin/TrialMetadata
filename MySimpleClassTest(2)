@@ -1,15 +1,13 @@
 @isTest
 private class MySimpleClassTest {
     @isTest static void testGreetingMorningAndEvening() {
-        String morningGreeting = MySimpleClass.getGreeting(true);
-        System.assertEquals('Good morning', morningGreeting);
-
-        String eveningGreeting = MySimpleClass.getGreeting(false);
-        System.assertEquals('Good evening', eveningGreeting);
+        System.assertEquals('Good morning', MySimpleClass.getGreeting(true), 'Expected morning greeting');
+        System.assertEquals('Good evening', MySimpleClass.getGreeting(false), 'Expected evening greeting');
     }
 
     @isTest static void testFindUsersByUsername() {
-        User u = new User(
+        // Create a test user to use for runAs
+        User testUser = new User(
             FirstName = 'Test',
             LastName = 'User',
             Email = 'testuser@example.com',
@@ -21,10 +19,12 @@ private class MySimpleClassTest {
             ProfileId = UserInfo.getProfileId(),
             LanguageLocaleKey = 'en_US'
         );
-        insert u;
+        insert testUser;
 
-        List<User> foundUsers = MySimpleClass.findUsersByUsername(u.Username);
-        System.assertEquals(1, foundUsers.size());
-        System.assertEquals(u.Id, foundUsers[0].Id);
+        System.runAs(testUser) {
+            List<User> foundUsers = MySimpleClass.findUsersByUsername(testUser.Username);
+            System.assertEquals(1, foundUsers.size(), 'Should find exactly one user');
+            System.assertEquals(testUser.Id, foundUsers[0].Id, 'Returned user ID should match inserted user');
+        }
     }
 }
