@@ -16,9 +16,9 @@ private class AccountAutomationsTest {
         Account acc = new Account(Name = 'My Test Account');
         insert acc;
         acc = AccountAutomations.setDefaultBillingAddress(acc);
-        System.assertEquals('123 Main St', acc.BillingStreet, 'Default BillingStreet is 123 Main St');
-        System.assertEquals('CA', acc.BillingState, 'Default BillingState is CA');
-        System.assertEquals('90210', acc.BillingPostalCode, 'Default BillingPostalCode is 90210');
+        System.assertEquals('456 W Madison St', acc.BillingStreet, 'Default BillingStreet is 456 W Madison St');
+        System.assertEquals('IL', acc.BillingState, 'Default BillingState is IL');
+        System.assertEquals('60661', acc.BillingPostalCode, 'Default BillingPostalCode is 60661');
         System.assertEquals('USA', acc.BillingCountry, 'Default BillingCountry is USA');
     }
 
@@ -26,9 +26,9 @@ private class AccountAutomationsTest {
         Account acc = new Account(Name = 'My Test Account');
         insert acc;
         acc = AccountAutomations.setDefaultShippingAddress(acc);
-        System.assertEquals('123 Main St', acc.ShippingStreet, 'Default ShippingStreet is 123 Main St');
-        System.assertEquals('CA', acc.ShippingState, 'Default ShippingState is CA');
-        System.assertEquals('90210', acc.ShippingPostalCode, 'Default ShippingPostalCode is 90210');
+        System.assertEquals('456 W Madison St', acc.ShippingStreet, 'Default ShippingStreet is 456 W Madison St');
+        System.assertEquals('IL', acc.ShippingState, 'Default ShippingState is IL');
+        System.assertEquals('60661', acc.ShippingPostalCode, 'Default ShippingPostalCode is 60661');
         System.assertEquals('USA', acc.ShippingCountry, 'Default ShippingCountry is USA');
     }
 
@@ -36,13 +36,13 @@ private class AccountAutomationsTest {
         Account acc = new Account(Name = 'My Test Account');
         insert acc;
         acc = AccountAutomations.setDefaultPhone(acc);
-        System.assertEquals('5555555555', acc.Phone, 'Default phone number is 5555555555');
+        System.assertEquals('9257868477', acc.Phone, 'Default phone number is 9257868477');
     }
 
     @isTest static void testDefaultURL() {
         Account acc = new Account(Name = 'My Test Account');
         insert acc;
         acc = AccountAutomations.setDefaultURL(acc);
-        System.assertEquals('www.copa.do', acc.Website, 'Default website is www.copa.do');
+        System.assertEquals('www.copado.com', acc.Website, 'Default website is www.copado.com');
     }
 }
