@@ -8,28 +8,28 @@ public class AccountAutomations {
     }
 
     public static Account setDefaultBillingAddress(Account a) {
-        a.billingstreet = '123 Main St'; 
-        a.billingstate = 'CA'; 
-        a.billingpostalcode = '90210'; 
+        a.billingstreet = '456 W Madison St'; 
+        a.billingstate = 'IL'; 
+        a.billingpostalcode = '60661'; 
         a.billingcountry = 'USA';
         return a;
     }
 
     public static Account setDefaultShippingAddress(Account a) {
-        a.shippingstreet = '123 Main St'; 
-        a.shippingstate = 'CA';
-        a.shippingpostalcode = '90210';
+        a.shippingstreet = '456 W Madison St'; 
+        a.shippingstate = 'IL';
+        a.shippingpostalcode = '60661';
         a.shippingcountry = 'USA';
         return a;
     }
 
     public static Account setDefaultPhone(Account a) {
-        a.Phone = '5555555555';
+        a.Phone = '9257868477';
         return a;
     }
 
     public static Account setDefaultURL(Account a) {
-        a.website = 'www.copa.do'; 
+        a.website = 'www.copado.com'; 
         return a;
     }
 }
