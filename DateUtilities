@@ -1,0 +1,98 @@
+/**
+ * @description Utility class for handling common date operations
+ * @author Assistant
+ * @date 2024
+ */
+public class DateUtilities {
+    
+    /**
+     * @description Returns the first day of the month for a given date
+     * @param inputDate The date to process
+     * @return Date The first day of the month
+     */
+    public static Date getFirstDayOfMonth(Date inputDate) {
+        if (inputDate == null) {
+            return null;
+        }
+        return Date.newInstance(inputDate.year(), inputDate.month(), 1);
+    }
+    
+    /**
+     * @description Returns the last day of the month for a given date
+     * @param inputDate The date to process
+     * @return Date The last day of the month
+     */
+    public static Date getLastDayOfMonth(Date inputDate) {
+        if (inputDate == null) {
+            return null;
+        }
+        Date firstDayOfNextMonth = Date.newInstance(
+            inputDate.month() == 12 ? inputDate.year() + 1 : inputDate.year(),
+            inputDate.month() == 12 ? 1 : inputDate.month() + 1,
+            1
+        );
+        return firstDayOfNextMonth.addDays(-1);
+    }
+    
+    /**
+     * @description Checks if a date falls on a weekend (Saturday or Sunday)
+     * @param inputDate The date to check
+     * @return Boolean True if the date is a weekend
+     */
+    public static Boolean isWeekend(Date inputDate) {
+        if (inputDate == null) {
+            return false;
+        }
+        DateTime dt = DateTime.newInstance(inputDate.year(), inputDate.month(), inputDate.day());
+        String dayOfWeek = dt.format('E');
+        return dayOfWeek == 'Sat' || dayOfWeek == 'Sun';
+    }
+    
+    /**
+     * @description Returns the number of business days between two dates
+     * @param startDate The start date
+     * @param endDate The end date
+     * @return Integer Number of business days
+     */
+    public static Integer getBusinessDays(Date startDate, Date endDate) {
+        if (startDate == null || endDate == null || startDate > endDate) {
+            return 0;
+        }
+        
+        Integer businessDays = 0;
+        Date currentDate = startDate;
+        
+        while (currentDate <= endDate) {
+            if (!isWeekend(currentDate)) {
+                businessDays++;
+            }
+            currentDate = currentDate.addDays(1);
+        }
+        
+        return businessDays;
+    }
+    
+    /**
+     * @description Adds a specified number of business days to a date
+     * @param startDate The starting date
+     * @param businessDaysToAdd Number of business days to add
+     * @return Date The resulting date
+     */
+    public static Date addBusinessDays(Date startDate, Integer businessDaysToAdd) {
+        if (startDate == null || businessDaysToAdd == null || businessDaysToAdd < 0) {
+            return startDate;
+        }
+        
+        Date currentDate = startDate;
+        Integer businessDaysAdded = 0;
+        
+        while (businessDaysAdded < businessDaysToAdd) {
+            currentDate = currentDate.addDays(1);
+            if (!isWeekend(currentDate)) {
+                businessDaysAdded++;
+            }
+        }
+        
+        return currentDate;
+    }
+}
