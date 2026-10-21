@@ -1,10 +1,16 @@
+/**
+ * @description Unit tests for MySimpleClass. Every test method runs its
+ * assertions inside System.runAs using a test user with a unique username.
+ */
 @isTest
 private class MySimpleClassTest {
 
     /**
-     * Builds a username that is unique across all Salesforce orgs.
-     * Combines a fixed prefix, the current timestamp, a random number,
-     * and the org Id, so repeated runs and other orgs never collide.
+     * @description Builds a username that is unique across all Salesforce orgs.
+     * Combines a prefix, the current timestamp, a random number, and the org Id,
+     * so repeated runs and other orgs never collide.
+     * @param prefix The leading text for the username, for example 'testuser'.
+     * @return A unique username formatted like an email address.
      */
     private static String buildUniqueUsername(String prefix) {
         String uniqueKey = String.valueOf(DateTime.now().getTime())
@@ -12,18 +18,18 @@ private class MySimpleClassTest {
         return prefix + '.' + uniqueKey + '@' + UserInfo.getOrganizationId() + '.test.com';
     }
 
-    @isTest static void testGreetingMorningAndEvening() {
-        System.assertEquals('Good morning', MySimpleClass.getGreeting(true), 'Expected morning greeting');
-        System.assertEquals('Good evening', MySimpleClass.getGreeting(false), 'Expected evening greeting');
-    }
-
-    @isTest static void testFindUsersByUsername() {
-        // Create a test user with a guaranteed unique username
+    /**
+     * @description Creates and inserts a test user with a unique username.
+     * The user shares the profile of the current user.
+     * @param prefix The leading text for the username, for example 'testuser'.
+     * @return The inserted User record.
+     */
+    private static User createTestUser(String prefix) {
         User testUser = new User(
             FirstName = 'Test',
             LastName = 'User',
             Email = 'testuser@example.com',
-            Username = buildUniqueUsername('testuser'),
+            Username = buildUniqueUsername(prefix),
             Alias = 'tuser',
             TimeZoneSidKey = 'America/Los_Angeles',
             LocaleSidKey = 'en_US',
@@ -32,6 +38,20 @@ private class MySimpleClassTest {
             LanguageLocaleKey = 'en_US'
         );
         insert testUser;
+        return testUser;
+    }
+
+    @isTest static void testGreetingMorningAndEvening() {
+        User testUser = createTestUser('greeting');
+
+        System.runAs(testUser) {
+            System.assertEquals('Good morning', MySimpleClass.getGreeting(true), 'Expected morning greeting');
+            System.assertEquals('Good evening', MySimpleClass.getGreeting(false), 'Expected evening greeting');
+        }
+    }
+
+    @isTest static void testFindUsersByUsername() {
+        User testUser = createTestUser('finduser');
 
         System.runAs(testUser) {
             List<User> foundUsers = MySimpleClass.findUsersByUsername(testUser.Username);
