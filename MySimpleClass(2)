@@ -1,15 +1,4 @@
-/**
- * @description Provides simple helper methods for returning greetings
- * and looking up users by username. Runs with sharing and checks
- * CRUD and FLS before querying the User object.
- */
 public with sharing class MySimpleClass {
-
-    /**
-     * @description Returns a greeting based on the time of day.
-     * @param isMorning True to get the morning greeting, false for the evening greeting.
-     * @return 'Good morning' when isMorning is true, otherwise 'Good evening'.
-     */
     public static String getGreeting(Boolean isMorning) {
         if (isMorning) {
             return 'Good morning';
@@ -18,18 +7,12 @@ public with sharing class MySimpleClass {
         }
     }
 
-    /**
-     * @description Finds users that match the given username. Returns an empty
-     * list when the running user cannot access the User object or its Username field.
-     * @param username The exact username to search for.
-     * @return A list of matching User records, or an empty list if access is denied.
-     */
     public static List<User> findUsersByUsername(String username) {
-        // Check CRUD and FLS access
+        // Check CRUD access
         if (Schema.sObjectType.User.isAccessible() && Schema.sObjectType.User.fields.Username.isAccessible()) {
             return [SELECT Id FROM User WHERE Username = :username];
         } else {
-            // If not accessible, return an empty list
+            // If not accessible, return an empty list or handle as appropriate
             return new List<User>();
         }
     }
